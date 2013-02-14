@@ -1,4 +1,0 @@
-practices
-=========
-
-Studies &amp; demonstrations

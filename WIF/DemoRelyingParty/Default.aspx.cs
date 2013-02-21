@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Threading;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.IdentityModel.Claims;
 
 namespace DemoRelyingParty
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            txtName.Text = User.Identity.Name;
+            var identity = ((IClaimsPrincipal)Thread.CurrentPrincipal).Identities[0];
+            var dateOfBirth = identity.Claims.FirstOrDefault(x => x.ClaimType == ClaimTypes.DateOfBirth);
+            if (dateOfBirth != null)
+            {
+                lblDate.Text = dateOfBirth.Value;
+            }
         }
     }
 }

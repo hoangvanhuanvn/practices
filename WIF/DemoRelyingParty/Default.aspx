@@ -10,6 +10,13 @@
     <div>
         <b>Default page here</b>
     </div>
+    <br />
+    <div>
+        Welcome
+        <asp:TextBox runat="server" ID="txtName" ReadOnly="True"></asp:TextBox>
+        <br/>
+        Date of birth: <asp:Label runat="server" ID="lblDate"></asp:Label>
+    </div>
     </form>
 </body>
 </html>

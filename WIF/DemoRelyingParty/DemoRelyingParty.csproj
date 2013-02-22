@@ -80,6 +80,12 @@
       <DependentUpon>Secured.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GdNet.Claims\GdNet.Claims.csproj">
+      <Project>{4E0441C6-4AD7-4895-9C22-67AC5BD88A02}</Project>
+      <Name>GdNet.Claims</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

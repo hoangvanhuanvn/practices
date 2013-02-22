@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Linq;
-using System.Threading;
 using System.Web.UI;
+using GdNet.Claims;
 using Microsoft.IdentityModel.Claims;
 
 namespace DemoRelyingParty
@@ -11,12 +10,14 @@ namespace DemoRelyingParty
         protected void Page_Load(object sender, EventArgs e)
         {
             txtName.Text = User.Identity.Name;
-            var identity = ((IClaimsPrincipal)Thread.CurrentPrincipal).Identities[0];
-            var dateOfBirth = identity.Claims.FirstOrDefault(x => x.ClaimType == ClaimTypes.DateOfBirth);
-            if (dateOfBirth != null)
-            {
-                lblDate.Text = dateOfBirth.Value;
-            }
+
+            var identity = GetClaimsIdentity();
+            lblDate.Text = identity.BuildHtmlValue();
+        }
+
+        private IClaimsIdentity GetClaimsIdentity()
+        {
+            return User.Identity as IClaimsIdentity;
         }
     }
 }

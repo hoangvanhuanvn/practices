@@ -1,15 +1,3 @@
-//-----------------------------------------------------------------------------
-//
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-// PARTICULAR PURPOSE.
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-//
-//
-//-----------------------------------------------------------------------------
-
 using System;
 using System.Globalization;
 using System.Web.Configuration;
@@ -19,9 +7,6 @@ using Microsoft.IdentityModel.Protocols.WSFederation;
 using Microsoft.IdentityModel.SecurityTokenService;
 using Microsoft.IdentityModel.Web;
 
-/// <summary>
-/// The Default Page Class
-/// </summary>
 public partial class _Default : Page
 {
     /// <summary>
@@ -41,8 +26,9 @@ public partial class _Default : Page
                 {
                     var issuerName = WebConfigurationManager.AppSettings[Common.IssuerName];
                     var signingCertificateName = WebConfigurationManager.AppSettings[Common.SigningCertificateName];
+                    var encryptingCertificateName = WebConfigurationManager.AppSettings["EncryptingCertificateName"];
 
-                    SecurityTokenService sts = new CustomSecurityTokenService(CustomSecurityTokenServiceConfiguration.GetCurrent(issuerName, signingCertificateName));
+                    SecurityTokenService sts = new CustomSecurityTokenService(CustomSecurityTokenServiceConfiguration.GetCurrent(issuerName, signingCertificateName), encryptingCertificateName);
                     var responseMessage = FederatedPassiveSecurityTokenServiceOperations.ProcessSignInRequest(requestMessage, User, sts);
 
                     FederatedPassiveSecurityTokenServiceOperations.ProcessSignInResponse(responseMessage, Response);

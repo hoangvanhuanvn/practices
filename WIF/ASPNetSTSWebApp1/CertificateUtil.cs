@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Security.Cryptography.X509Certificates;
 
-namespace GdNet.Accounts
+namespace ASPNetSTSWebApp1
 {
     /// <summary>
     /// A utility class which helps to retrieve an x509 certificate
@@ -10,10 +13,9 @@ namespace GdNet.Accounts
     {
         public static X509Certificate2 GetCertificate(StoreName name, StoreLocation location, string subjectName)
         {
-            var store = new X509Store(name, location);
-            store.Open(OpenFlags.ReadOnly);
-
+            X509Store store = new X509Store(name, location);
             X509Certificate2Collection certificates = null;
+            store.Open(OpenFlags.ReadOnly);
 
             try
             {
@@ -24,9 +26,11 @@ namespace GdNet.Accounts
                 //
                 certificates = store.Certificates;
 
-                foreach (X509Certificate2 cert in certificates)
+                for (int i = 0; i < certificates.Count; i++)
                 {
-                    if (!string.IsNullOrEmpty(cert.SubjectName.Name) && cert.SubjectName.Name.ToLower() == subjectName.ToLower())
+                    X509Certificate2 cert = certificates[i];
+
+                    if (cert.SubjectName.Name.ToLower() == subjectName.ToLower())
                     {
                         if (result != null)
                         {
@@ -48,8 +52,9 @@ namespace GdNet.Accounts
             {
                 if (certificates != null)
                 {
-                    foreach (var cert in certificates)
+                    for (int i = 0; i < certificates.Count; i++)
                     {
+                        X509Certificate2 cert = certificates[i];
                         cert.Reset();
                     }
                 }
@@ -59,4 +64,3 @@ namespace GdNet.Accounts
         }
     }
 }
-

@@ -31,6 +31,33 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdNet.Accounts", "GdNet.Acc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdNet.Accounts.Web", "GdNet.Accounts.Web\GdNet.Accounts.Web.csproj", "{18B3695A-8747-49AC-BACC-A8846731CCAB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{60D478D3-0DF8-4CE3-BC56-7B60C3920409}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{0F0C1056-791B-4533-AC60-6BE8E2117221}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebApplication1_STS", "WebApplication1_STS", "{D219F2D5-E1A5-468E-9EB7-382110CD378F}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/WebApplication1_STS"
+		Debug.AspNetCompiler.PhysicalPath = "WebApplication1_STS\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\WebApplication1_STS\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/WebApplication1_STS"
+		Release.AspNetCompiler.PhysicalPath = "WebApplication1_STS\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\WebApplication1_STS\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "59624"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accounts", "Accounts", "{802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,8 +84,25 @@ Global
 		{18B3695A-8747-49AC-BACC-A8846731CCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18B3695A-8747-49AC-BACC-A8846731CCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18B3695A-8747-49AC-BACC-A8846731CCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F0C1056-791B-4533-AC60-6BE8E2117221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F0C1056-791B-4533-AC60-6BE8E2117221}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F0C1056-791B-4533-AC60-6BE8E2117221}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F0C1056-791B-4533-AC60-6BE8E2117221}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D219F2D5-E1A5-468E-9EB7-382110CD378F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D219F2D5-E1A5-468E-9EB7-382110CD378F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D219F2D5-E1A5-468E-9EB7-382110CD378F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{D219F2D5-E1A5-468E-9EB7-382110CD378F}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0F0C1056-791B-4533-AC60-6BE8E2117221} = {60D478D3-0DF8-4CE3-BC56-7B60C3920409}
+		{D219F2D5-E1A5-468E-9EB7-382110CD378F} = {60D478D3-0DF8-4CE3-BC56-7B60C3920409}
+		{04F175BC-AE92-4345-A0D4-2714891E6CDF} = {802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}
+		{4E0441C6-4AD7-4895-9C22-67AC5BD88A02} = {802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}
+		{B3427268-71D2-4B55-BFC6-BFFFB0D90F4F} = {802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}
+		{7D084643-1199-4918-B6A3-5E16690E19DF} = {802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}
+		{18B3695A-8747-49AC-BACC-A8846731CCAB} = {802D8E29-0381-46EF-BC69-B7BDCDB3CBCA}
 	EndGlobalSection
 EndGlobal

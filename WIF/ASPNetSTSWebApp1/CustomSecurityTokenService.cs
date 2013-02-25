@@ -1,12 +1,27 @@
+//-----------------------------------------------------------------------------
+//
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
+// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+// PARTICULAR PURPOSE.
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+//
+//-----------------------------------------------------------------------------
+
+
 using System;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
+using System.Web.Configuration;
+
 using Microsoft.IdentityModel.Claims;
 using Microsoft.IdentityModel.Configuration;
 using Microsoft.IdentityModel.Protocols.WSTrust;
 using Microsoft.IdentityModel.SecurityTokenService;
 
-namespace GdNet.Accounts
+namespace ASPNetSTSWebApp1
 {
     /// <summary>
     /// A custom SecurityTokenService implementation.
@@ -19,17 +34,13 @@ namespace GdNet.Accounts
         // TODO: Add relying party Url's that will be allowed to get token from this STS
         static readonly string[] PassiveRedirectBasedClaimsAwareWebApps = { /*"https://localhost/PassiveRedirectBasedClaimsAwareWebApp"*/ };
 
-        private string _encryptingCertificateName;
-
         /// <summary>
         /// Creates an instance of CustomSecurityTokenService.
         /// </summary>
         /// <param name="configuration">The SecurityTokenServiceConfiguration.</param>
-        /// <param name="encryptingCertificateName"></param>
-        public CustomSecurityTokenService(SecurityTokenServiceConfiguration configuration, string encryptingCertificateName)
+        public CustomSecurityTokenService(SecurityTokenServiceConfiguration configuration)
             : base(configuration)
         {
-            _encryptingCertificateName = encryptingCertificateName;
         }
 
         /// <summary>
@@ -84,12 +95,13 @@ namespace GdNet.Accounts
             //
             Scope scope = new Scope(request.AppliesTo.Uri.OriginalString, SecurityTokenServiceConfiguration.SigningCredentials);
 
-            if (!string.IsNullOrEmpty(_encryptingCertificateName))
+            string encryptingCertificateName = WebConfigurationManager.AppSettings["EncryptingCertificateName"];
+            if (!string.IsNullOrEmpty(encryptingCertificateName))
             {
                 // Important note on setting the encrypting credentials.
                 // In a production deployment, you would need to select a certificate that is specific to the RP that is requesting the token.
                 // You can examine the 'request' to obtain information to determine the certificate to use.
-                scope.EncryptingCredentials = new X509EncryptingCredentials(CertificateUtil.GetCertificate(StoreName.My, StoreLocation.LocalMachine, _encryptingCertificateName));
+                scope.EncryptingCredentials = new X509EncryptingCredentials(CertificateUtil.GetCertificate(StoreName.My, StoreLocation.LocalMachine, encryptingCertificateName));
             }
             else
             {
@@ -127,9 +139,8 @@ namespace GdNet.Accounts
             // TODO: Change the claims below to issue custom claims required by your application.
             // Update the application's configuration file too to reflect new claims requirement.
 
-            outputIdentity.Claims.Add(new Claim(ClaimTypes.Name, principal.Identity.Name));
+            outputIdentity.Claims.Add(new Claim(System.IdentityModel.Claims.ClaimTypes.Name, principal.Identity.Name));
             outputIdentity.Claims.Add(new Claim(ClaimTypes.Role, "Manager"));
-            outputIdentity.Claims.Add(new Claim(ClaimTypes.DateOfBirth, "10/10/2000"));
 
             return outputIdentity;
         }

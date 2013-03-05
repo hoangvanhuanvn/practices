@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.ServiceModel;
 using Microsoft.IdentityModel.Claims;
@@ -48,15 +49,7 @@ namespace GdNet.Accounts
             // TODO: Enable AppliesTo validation for allowed relying party Urls by setting enableAppliesToValidation to true. By default it is false.
             if (enableAppliesToValidation)
             {
-                bool validAppliesTo = false;
-                foreach (string rpUrl in PassiveRedirectBasedClaimsAwareWebApps)
-                {
-                    if (appliesTo.Uri.Equals(new Uri(rpUrl)))
-                    {
-                        validAppliesTo = true;
-                        break;
-                    }
-                }
+                bool validAppliesTo = PassiveRedirectBasedClaimsAwareWebApps.Any(rpUrl => appliesTo.Uri.Equals(new Uri(rpUrl)));
 
                 if (!validAppliesTo)
                 {

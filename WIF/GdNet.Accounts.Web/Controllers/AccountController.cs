@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using GdNet.Accounts.Web.Models;
+using Microsoft.IdentityModel.Web;
 
 namespace GdNet.Accounts.Web.Controllers
 {
@@ -56,7 +57,10 @@ namespace GdNet.Accounts.Web.Controllers
 
         public ActionResult LogOff()
         {
-            FormsAuthentication.SignOut();
+            WSFederationAuthenticationModule module = (WSFederationAuthenticationModule)ControllerContext.HttpContext.ApplicationInstance.Modules["WSFederationAuthenticationModule"];
+            module.SignOut(true);
+
+            //            FormsAuthentication.SignOut();
 
             return RedirectToAction("Index", "Home");
         }

@@ -36,12 +36,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CertificateUtil.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="CustomSecurityTokenService.cs" />
     <Compile Include="CustomSecurityTokenServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

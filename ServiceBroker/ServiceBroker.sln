@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBrokerDemo", "ServiceBrokerDemo\ServiceBrokerDemo.csproj", "{A87C83BF-605C-4208-906E-4E7EC0ECB642}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBrokerExternalActivation", "ServiceBrokerExternalActivation\ServiceBrokerExternalActivation.csproj", "{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A87C83BF-605C-4208-906E-4E7EC0ECB642}.Debug|x86.ActiveCfg = Debug|x86
+		{A87C83BF-605C-4208-906E-4E7EC0ECB642}.Debug|x86.Build.0 = Debug|x86
+		{A87C83BF-605C-4208-906E-4E7EC0ECB642}.Release|x86.ActiveCfg = Release|x86
+		{A87C83BF-605C-4208-906E-4E7EC0ECB642}.Release|x86.Build.0 = Release|x86
+		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Debug|x86.ActiveCfg = Debug|x86
+		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Debug|x86.Build.0 = Debug|x86
+		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Release|x86.ActiveCfg = Release|x86
+		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

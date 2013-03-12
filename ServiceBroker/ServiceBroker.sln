@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBrokerDemo", "Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceBrokerExternalActivation", "ServiceBrokerExternalActivation\ServiceBrokerExternalActivation.csproj", "{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleExternalActivator", "SampleExternalActivator\SampleExternalActivator.csproj", "{4BC1CC9C-4CCA-4868-935A-B6144F768546}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -19,6 +21,10 @@ Global
 		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Debug|x86.Build.0 = Debug|x86
 		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Release|x86.ActiveCfg = Release|x86
 		{1A4E43EA-6809-4EB1-8310-1CBFC890FB3F}.Release|x86.Build.0 = Release|x86
+		{4BC1CC9C-4CCA-4868-935A-B6144F768546}.Debug|x86.ActiveCfg = Debug|x86
+		{4BC1CC9C-4CCA-4868-935A-B6144F768546}.Debug|x86.Build.0 = Debug|x86
+		{4BC1CC9C-4CCA-4868-935A-B6144F768546}.Release|x86.ActiveCfg = Release|x86
+		{4BC1CC9C-4CCA-4868-935A-B6144F768546}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

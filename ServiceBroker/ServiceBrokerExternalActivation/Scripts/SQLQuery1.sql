@@ -19,36 +19,25 @@ GO
 --*  Create the message type "RequestMessage"
 --*********************************************
 CREATE MESSAGE TYPE
-[http://traceone.com/InternalActivation/RequestMessage]
-VALIDATION = NONE
+[http://traceone.com/ExternalActivation/RequestMessage]
+VALIDATION = WELL_FORMED_XML
 GO
 
 --*********************************************
 --*  Create the message type "ResponseMessage"
 --*********************************************
 CREATE MESSAGE TYPE
-[http://traceone.com/InternalActivation/ResponseMessage]
-VALIDATION = NONE
-GO
-
---************************************************
---*  Changing the validation of the message types
---************************************************
-ALTER MESSAGE TYPE [http://traceone.com/InternalActivation/RequestMessage]
-VALIDATION = WELL_FORMED_XML
-GO
-
-ALTER MESSAGE TYPE [http://traceone.com/InternalActivation/ResponseMessage]
+[http://traceone.com/ExternalActivation/ResponseMessage]
 VALIDATION = WELL_FORMED_XML
 GO
 
 --************************************************
 --*  Create the contract "HelloWorldContract"
 --************************************************
-CREATE CONTRACT [http://traceone.com/InternalActivation/HelloWorldContract]
+CREATE CONTRACT [http://traceone.com/ExternalActivation/HelloWorldContract]
 (
-	[http://traceone.com/InternalActivation/RequestMessage] SENT BY INITIATOR,
-	[http://traceone.com/InternalActivation/ResponseMessage] SENT BY TARGET
+	[http://traceone.com/ExternalActivation/RequestMessage] SENT BY INITIATOR,
+	[http://traceone.com/ExternalActivation/ResponseMessage] SENT BY TARGET
 )
 GO
 
@@ -72,27 +61,22 @@ GO
 CREATE QUEUE TargetQueue
 GO
 
-
-
 --************************************************************
 --*  Create the queues "InitiatorService" and "TargetService"
 --************************************************************
 CREATE SERVICE InitiatorService
 ON QUEUE InitiatorQueue 
 (
-	[http://traceone.com/InternalActivation/HelloWorldContract]
+	[http://traceone.com/ExternalActivation/HelloWorldContract]
 )
 GO
 
 CREATE SERVICE TargetService
 ON QUEUE TargetQueue
 (
-	[http://traceone.com/InternalActivation/HelloWorldContract]
+	[http://traceone.com/ExternalActivation/HelloWorldContract]
 )
 GO
-
-
-
 
 --********************************************************************
 --*  Sending a message from the InitiatorService to the TargetService
@@ -108,12 +92,12 @@ AS
 			BEGIN DIALOG CONVERSATION @ch
 				FROM SERVICE [InitiatorService]
 				TO SERVICE 'TargetService'
-				ON CONTRACT [http://traceone.com/InternalActivation/HelloWorldContract]
+				ON CONTRACT [http://traceone.com/ExternalActivation/HelloWorldContract]
 				WITH ENCRYPTION = OFF;
 
 			SET @msg = '<HelloWorldRequest>' + @body + '</HelloWorldRequest>';
 
-			SEND ON CONVERSATION @ch MESSAGE TYPE [http://traceone.com/InternalActivation/RequestMessage] (@msg);
+			SEND ON CONVERSATION @ch MESSAGE TYPE [http://traceone.com/ExternalActivation/RequestMessage] (@msg);
 		COMMIT;
 	END TRY
 	BEGIN CATCH
@@ -122,18 +106,70 @@ AS
 GO
 
 --- Create an event notification for QUEUE_ACTIVATION event
-CREATE EVENT NOTIFICATION NotificationOnTargetQueue
-ON QUEUE TargetQueue
-FOR QUEUE_ACTIVATION
-TO SERVICE 'TargetService', 'current database'
+-- Deactivate internal activation on the queue if necessary
+ALTER QUEUE TargetQueue
+WITH ACTIVATION (DROP)
 GO
 
+-- Create the event-notification queue
+CREATE QUEUE ExternalActivatorQueue
+GO
+
+-- Create the event-notification service
+CREATE SERVICE ExternalActivatorService
+ON QUEUE ExternalActivatorQueue
+(
+	[http://traceone.com/ExternalActivation/HelloWorldContract]
+)
+GO
+
+-- Subscribe to the QUEUE_ACTIVATION event on the queue TargetQueue
+CREATE EVENT NOTIFICATION EventNotificationTargetQueue
+ON QUEUE TargetQueue
+FOR QUEUE_ACTIVATION
+TO SERVICE 'ExternalActivatorService', 'current database'
+GO
 
 
 ---- TEST MESSAGES
 exec SendRequestMessages 'HuanHV'
 GO
 
-SELECT CAST(message_body as XML) ,* FROM TargetQueue
+SELECT CAST(message_body as XML) as message_body_xml,* FROM TargetQueue
 GO
 
+SELECT CAST(message_body as XML) as message_body_xml,* FROM EventNotificationTargetQueue
+GO
+
+
+
+
+
+
+
+
+USE master
+GO
+ 
+-- create a sql-login for the same named service account from windows
+CREATE LOGIN [NT AUTHORITY\NETWORK SERVICE] FROM WINDOWS
+GO
+
+USE [ServiceBrokerExternalActivation]
+GO
+
+-- allow CONNECT to the notification database
+GRANT CONNECT TO [NT AUTHORITY\NETWORK SERVICE]
+GO
+ 
+-- allow RECEIVE from the notification service queue
+GRANT RECEIVE ON TargetQueue TO [NT AUTHORITY\NETWORK SERVICE]
+GO
+ 
+-- allow VIEW DEFINITION right on the notification service
+GRANT VIEW DEFINITION ON SERVICE::TargetService TO [NT AUTHORITY\NETWORK SERVICE]
+GO
+ 
+-- allow REFRENCES right on the notification queue schema
+GRANT REFERENCES ON SCHEMA::dbo TO [NT AUTHORITY\NETWORK SERVICE]
+GO

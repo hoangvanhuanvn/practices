@@ -14,8 +14,13 @@ namespace SampleExternalActivator
                 Directory.CreateDirectory(dirName);
             }
 
-            var path = Path.Combine(dirName, string.Format("ExternalActivator_{0}.txt", DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(" ", "-")));
+            var fileName = string.Format("ExternalActivator_{0}.txt", DateTime.Now.ToString(CultureInfo.InvariantCulture));
+            fileName = fileName.Replace(":", "-").Replace(" ", "-").Replace("/", "-");
+
+            var path = Path.Combine(dirName, fileName);
             File.WriteAllText(path, "Started at " + DateTime.Now);
+
+
         }
     }
 }
